@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -86,9 +85,7 @@ fun AlbumListContainer(
                     Spacer(modifier = Modifier.width(if (index == 0) 24.dp else 16.dp))
                     val itemAlpha = if (clickedItemIndex == index && transitionInProgress) 0f else 1f
                     CompositionLocalProvider(LocalContentAlpha provides itemAlpha) {
-                        val topOffset = ((index + 1) * (1f - appearingAnimationProgress) * 10).dp
                         AlbumListItem(
-                            modifier = Modifier.offset(y = topOffset).alpha(appearingAnimationProgress),
                             info = albumInfoModel,
                             albumImageWidth = albumImageWidth,
                             onClick = { info, offset, size ->
@@ -144,7 +141,7 @@ private fun AlbumListItem(
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = info.year.toString(),
-            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+            color = MaterialTheme.colorScheme.onPrimary,
             fontSize = 16.sp,
             fontWeight = FontWeight.Light,
         )

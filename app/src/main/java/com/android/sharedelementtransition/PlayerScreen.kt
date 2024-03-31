@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import com.android.sharedelementtransition.albums.AlbumDetailScreen
 import com.android.sharedelementtransition.albums.AlbumScreen
 import com.android.sharedelementtransition.states.AlbumPreviewDetailScreen
 import com.android.sharedelementtransition.models.PlayBackData
@@ -70,6 +71,13 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
             }
         }
 
+        val goBackFromNowPlayingScreen: () -> Unit = remember {
+            {
+                sharedElementTransitioned = false
+                animateTitleProgress(0f)
+            }
+        }
+
         MainPlayerScreen(screenState = screenState)
 
         if (screenState.currentScreen != Screen.MAINPLAYERSCREEN) {
@@ -94,7 +102,18 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
         }
 
         if (albumPreviewDetailTransition == AlbumPreviewDetailScreen.ALBUMPREVIEWDETAIL) {
-
+            AlbumDetailScreen(
+                maxContentWidth = screenState.maxContentWidth,
+                sharedElementData = sharedElementParams,
+                transitioned = sharedElementTransitioned,
+                topInset = defaultStatusBarPadding,
+                onTransitionFinished = {
+                    if (!sharedElementTransitioned) {
+                        albumPreviewDetailTransition = AlbumPreviewDetailScreen.NONE
+                    }
+                },
+                onBackClick = goBackFromNowPlayingScreen
+            )
         }
     }
 }

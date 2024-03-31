@@ -37,19 +37,10 @@ import com.android.sharedelementtransition.ui.TopMenu
 const val TOP_MENU_TITLE1 = "Now Playing"
 
 class CollapsingHeaderState(topInset: Dp) {
-    val maxHeaderCollapse = MAX_HEADER_COLLAPSE
     val headerMaxHeight = topInset + MAX_HEADER_HEIGHT
     var headerHeight: Dp by mutableStateOf(headerMaxHeight)
 
-    private val headerElevation by derivedStateOf {
-        if (headerHeight > headerMaxHeight - MAX_HEADER_COLLAPSE) 0.dp else 2.dp
-    }
-
-    fun findHeaderElevation(isSharedProgressRunning: Boolean): Dp =
-        if (isSharedProgressRunning) 0.dp else headerElevation
-
     companion object{
-        val MAX_HEADER_COLLAPSE = 120.dp
         val MAX_HEADER_HEIGHT = 450.dp
     }
 }

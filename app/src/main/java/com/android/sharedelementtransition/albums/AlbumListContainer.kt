@@ -114,7 +114,7 @@ private fun AlbumListItem(
     var parentOffset by remember { mutableStateOf(Offset.Unspecified) }
     var mySize by remember { mutableIntStateOf(0) }
     Column(
-        modifier = modifier.width(albumImageWidth),
+        modifier = modifier.width(albumImageWidth).padding(10.dp),
     ) {
         Image(
             painter = painterResource(id = info.cover),
@@ -129,21 +129,6 @@ private fun AlbumListItem(
                 .clip(RoundedCornerShape(10.dp))
                 .alpha(LocalContentAlpha.current)
                 .clickable { onClick(info, parentOffset, mySize) },
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = info.title,
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 16.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = info.year.toString(),
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Light,
         )
     }
 }

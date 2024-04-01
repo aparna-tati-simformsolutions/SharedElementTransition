@@ -67,7 +67,6 @@ fun SharedElementContainer(
         cornersProgress.value,
     )
 
-
     BoxWithConstraints(modifier) {
         val maxHeight = (constraints.maxHeight - 128.dp.toPx(density).toFloat() - 124.dp.toPx()
             .toFloat()).toDp()

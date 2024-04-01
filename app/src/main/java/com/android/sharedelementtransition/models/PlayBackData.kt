@@ -11,6 +11,7 @@ class PlayBackData {
         AlbumInfoModel(R.drawable.img_album_01, "It happened Quiet", "Aurora", 2018, songs()),
         AlbumInfoModel(R.drawable.img_album_02, "All My Daemons", "Aurora", 2016, songs()),
         AlbumInfoModel(R.drawable.img_album_03, "Running", "Aurora", 2015, songs()),
+        AlbumInfoModel(R.drawable.img_album_03, "Running", "Aurora", 2015, songs())
     )
 
     private fun songs() = listOf(

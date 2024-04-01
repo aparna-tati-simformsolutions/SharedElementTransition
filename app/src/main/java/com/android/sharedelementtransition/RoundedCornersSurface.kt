@@ -13,9 +13,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.android.sharedelementtransition.ui.theme.SharedElementTransitionTheme
 
-/*
- * Created by Exyte on 15.10.2021.
- */
 const val CORNERS_SIZE = 48
 
 @Composable
@@ -27,13 +24,9 @@ fun RoundedCornersSurface(
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
             .shadow(
                 elevation = elevation,
-                shape = RoundedCornerShape(
-                    bottomStart = CORNERS_SIZE.dp,
-                    bottomEnd = CORNERS_SIZE.dp
-                ),
                 clip = true
             )
             .background(color)

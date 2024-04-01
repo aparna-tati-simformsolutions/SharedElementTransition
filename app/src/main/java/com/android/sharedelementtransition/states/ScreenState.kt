@@ -65,4 +65,4 @@ class PlayerScreenState(
     }
 }
 
-const val AlbumContainerRatio = 0.45f
+const val AlbumContainerRatio = 1f

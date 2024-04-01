@@ -1,17 +1,17 @@
 package com.android.sharedelementtransition.albums
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,23 +49,21 @@ const val TOP_MENU_TITLE = "Albums"
 @Composable
 fun AlbumListContainer(
     modifier: Modifier = Modifier,
-    listScrollState: ScrollState = rememberScrollState(),
     albumData: Collection<AlbumInfoModel>,
     albumImageWidth: Dp = 150.dp,
     transitionAnimationProgress: Float = 0f,
-    appearingAnimationProgress: Float = 1f,
     onBackClick: () -> Unit = {},
     onShareClick: () ->  Unit = {},
     onInfoClick: (info: AlbumInfoModel, offsetX: Float, offsetY: Float, size: Int) -> Unit = { _, _, _, _ -> }
 ) {
 
-    var clickedItemIndex by remember { mutableStateOf(-1) }
+    var clickedItemIndex by remember { mutableIntStateOf(-1) }
     val transitionInProgress by remember(transitionAnimationProgress) {
         derivedStateOf { transitionAnimationProgress > 0f }
     }
 
     RoundedCornersSurface(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.primary
     ) {
         Column {
@@ -79,9 +78,11 @@ fun AlbumListContainer(
                 onStartIconClick = onBackClick,
                 onEndIconClick = onShareClick,
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Row(modifier = Modifier.horizontalScroll(listScrollState)) {
-                albumData.forEachIndexed { index, albumInfoModel ->
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(albumImageWidth)
+            ) {
+                items(albumData.toMutableList()) { albumInfoModel ->
+                    val index = albumData.indexOf(albumInfoModel)
                     Spacer(modifier = Modifier.width(if (index == 0) 24.dp else 16.dp))
                     val itemAlpha = if (clickedItemIndex == index && transitionInProgress) 0f else 1f
                     CompositionLocalProvider(LocalContentAlpha provides itemAlpha) {
@@ -99,7 +100,6 @@ fun AlbumListContainer(
                     }
                 }
             }
-            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
@@ -112,7 +112,7 @@ private fun AlbumListItem(
     onClick: (info: AlbumInfoModel, offset: Offset, size: Int) -> Unit
 ) {
     var parentOffset by remember { mutableStateOf(Offset.Unspecified) }
-    var mySize by remember { mutableStateOf(0) }
+    var mySize by remember { mutableIntStateOf(0) }
     Column(
         modifier = modifier.width(albumImageWidth),
     ) {

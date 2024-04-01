@@ -1,6 +1,7 @@
 package com.android.sharedelementtransition.albums
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,9 +23,9 @@ fun AlbumScreen(
         screenState = screenState
     ) {
         AlbumListContainer(
+            modifier = Modifier.fillMaxSize(),
             albumData = playBackData.albums,
             transitionAnimationProgress = sharedProgress,
-            appearingAnimationProgress = screenState.fromPlayerControlsToAlbumsListProgress,
             albumImageWidth = screenState.albumImageWidth,
             onBackClick = onBackClick,
             onInfoClick = onInfoClick
@@ -44,8 +45,6 @@ fun AlbumScreenCustom(
                 minHeight = screenState.albumContainerHeight,
                 maxHeight = screenState.albumContainerHeight
             )
-
-            require(measurables.size == 1)
 
             val albumListContainer = measurables[0]
 

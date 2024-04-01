@@ -63,6 +63,7 @@ fun Header(
 ) {
     SharedElementContainer(
         modifier = modifier
+            .fillMaxSize()
             .shadow(elevationProvider())
             .background(backgroundColorProvider.value),
         params = params.sharedElementParams,

@@ -1,5 +1,6 @@
 package com.android.sharedelementtransition
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -78,9 +79,11 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
             }
         }
 
-        MainPlayerScreen(screenState = screenState)
+        if (screenState.currentScreen == Screen.MAINPLAYERSCREEN) {
+            MainPlayerScreen(screenState = screenState)
+        }
 
-        if (screenState.currentScreen != Screen.MAINPLAYERSCREEN) {
+        if (screenState.currentScreen == Screen.ALBUMPREVIEW) {
             val density = LocalDensity.current
             AlbumScreen(
                 screenState = screenState,
@@ -113,6 +116,16 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
                 },
                 onBackClick = goBackFromNowPlayingScreen
             )
+        }
+
+        BackHandler(screenState.backHandlerEnabled) {
+            when {
+                sharedElementTransitioned -> goBackFromNowPlayingScreen()
+                screenState.currentScreen != Screen.MAINPLAYERSCREEN -> {
+                    screenState.currentScreen = Screen.MAINPLAYERSCREEN
+                    collapse()
+                }
+            }
         }
     }
 }

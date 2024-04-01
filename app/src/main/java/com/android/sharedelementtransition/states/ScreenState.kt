@@ -56,6 +56,8 @@ class PlayerScreenState(
     val albumImageWidth =
         min((maxContentWidth * 0.35f).toDp(), (maxContentHeight * 0.16f).toDp())
 
+    val backHandlerEnabled by derivedStateOf { currentScreen != Screen.MAINPLAYERSCREEN }
+
     val fromPlayerControlsToAlbumsListProgress by derivedStateOf {
         if (isInPreviewMode) {
             0f

@@ -106,7 +106,6 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
                 maxContentWidth = screenState.maxContentWidth,
                 sharedElementData = sharedElementParams,
                 transitioned = sharedElementTransitioned,
-                topInset = defaultStatusBarPadding,
                 onTransitionFinished = {
                     if (!sharedElementTransitioned) {
                         albumPreviewDetailTransition = AlbumPreviewDetailScreen.NONE

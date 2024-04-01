@@ -13,12 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -34,21 +29,6 @@ import com.android.sharedelementtransition.statusBarsPaddingWithOffset
 import com.android.sharedelementtransition.ui.TopMenu
 
 const val TOP_MENU_TITLE1 = "Now Playing"
-
-class CollapsingHeaderState(topInset: Dp) {
-    val headerMaxHeight = topInset + MAX_HEADER_HEIGHT
-    var headerHeight: Dp by mutableStateOf(headerMaxHeight)
-
-    companion object{
-        val MAX_HEADER_HEIGHT = 450.dp
-    }
-}
-
-@Composable
-@Stable
-fun rememberCollapsingHeaderState(key: Any = Unit, topInset: Dp) = remember(key1 = key) {
-    CollapsingHeaderState(topInset = topInset)
-}
 
 @Composable
 fun Header(

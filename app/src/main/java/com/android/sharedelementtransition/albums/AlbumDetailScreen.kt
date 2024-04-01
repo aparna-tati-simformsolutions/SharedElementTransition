@@ -3,31 +3,24 @@ package com.android.sharedelementtransition.albums
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.android.sharedelementtransition.DpInsets
 import com.android.sharedelementtransition.lerp
 import com.android.sharedelementtransition.models.AlbumInfoModel
 import com.android.sharedelementtransition.models.HeaderParams
 import com.android.sharedelementtransition.models.SharedElementData
 import com.android.sharedelementtransition.models.SharedElementParams
-import com.android.sharedelementtransition.toDp
 import com.android.sharedelementtransition.toPx
 import kotlinx.coroutines.launch
 
@@ -38,16 +31,10 @@ fun AlbumDetailScreen(
     maxContentWidth: Int,
     sharedElementData: SharedElementData,
     transitioned: Boolean,
-    topInset: Dp,
     onTransitionFinished: () -> Unit,
     onBackClick: () -> Unit
 ) {
     val sharedElementTargetSize = 230.dp
-    val insets = WindowInsets.navigationBars
-    val density = LocalDensity.current
-    val bottomInset by remember(insets) {
-        derivedStateOf { insets.getBottom(density).toDp(density) }
-    }
 
     AlbumDetailScreen(
         albumInfo = sharedElementData.albumInfo,
@@ -67,11 +54,7 @@ fun AlbumDetailScreen(
             targetCornerRadius = sharedElementTargetSize / 2
         ),
         onBackClick = onBackClick,
-        onTransitionFinished = onTransitionFinished,
-        insets = DpInsets.from(
-            topInset = topInset,
-            bottomInset = bottomInset
-        )
+        onTransitionFinished = onTransitionFinished
     )
 }
 
@@ -81,7 +64,6 @@ fun AlbumDetailScreen(
     albumInfo: AlbumInfoModel,
     sharedElementParams: SharedElementParams,
     isAppearing: Boolean,
-    insets: DpInsets = DpInsets.Zero,
     onTransitionFinished: () -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -97,9 +79,6 @@ fun AlbumDetailScreen(
             author = albumInfo.author
         )
     }
-
-    val headerState =
-        rememberCollapsingHeaderState(key = insets.topInset, topInset = insets.topInset)
 
     LaunchedEffect(key1 = isAppearing) {
         launch {
@@ -153,8 +132,7 @@ fun AlbumDetailScreen(
         ) {
             Header(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(headerState.headerHeight),
+                    .fillMaxWidth(),
                 params = headerParams,
                 contentAlphaProvider = contentAlphaState,
                 backgroundColorProvider = surfaceColor,

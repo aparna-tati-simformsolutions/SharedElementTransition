@@ -2,7 +2,6 @@ package com.android.sharedelementtransition
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,8 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.android.sharedelementtransition.ui.theme.SharedElementTransitionTheme
-
-const val CORNERS_SIZE = 48
 
 @Composable
 fun RoundedCornersSurface(

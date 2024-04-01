@@ -14,6 +14,6 @@ data class SharedElementData(
     val size: Dp
 ) {
     companion object {
-        val NONE = SharedElementData(AlbumInfoModel(0, "", "", 0, listOf()), 0.dp, 0.dp, 0.dp)
+        val NONE = SharedElementData(AlbumInfoModel(0, "", "", 0), 0.dp, 0.dp, 0.dp)
     }
 }

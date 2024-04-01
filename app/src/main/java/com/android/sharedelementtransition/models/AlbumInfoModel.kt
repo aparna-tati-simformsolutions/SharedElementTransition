@@ -11,5 +11,4 @@ data class AlbumInfoModel(
     val title: String,
     val author: String,
     val year: Int,
-    val songs: List<SongInfoModel>,
 )

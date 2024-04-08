@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -15,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -40,7 +38,6 @@ fun SharedElementContainer(
     labels: @Composable BoxScope.() -> Unit,
     sharedElement: @Composable BoxScope.() -> Unit
 ) {
-    val topOffsetOnScreen = 0.dp //Top padding + TopMenu height
     val density = LocalDensity.current
     val offsetProgress = remember { Animatable(if (isForward) 0f else 1f) }
     val cornersProgress = remember { Animatable(if (isForward) 0f else 1f) }
@@ -60,9 +57,7 @@ fun SharedElementContainer(
         }
     }
 
-    val initialOffset = remember(key1 = params) {
-        params.initialOffset.copy(y = params.initialOffset.y + topOffsetOnScreen.toPx(density))
-    }
+    val initialOffset = params.initialOffset.copy(y = params.initialOffset.y)
 
     val cornersSize = lerp(
         params.initialCornerRadius,
@@ -71,9 +66,7 @@ fun SharedElementContainer(
     )
 
     BoxWithConstraints(modifier) {
-        val maxHeight = (constraints.maxHeight - 128.dp.toPx(density).toFloat() - 124.dp.toPx()
-            .toFloat()).toDp()
-        val sharedElementSize = minOf(maxHeight, params.targetSize)
+        val sharedElementSize = params.targetSize
 
         val currentSize = lerp(
             params.initialSize,

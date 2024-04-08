@@ -5,6 +5,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -13,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -115,27 +118,22 @@ fun SharedElementContainer(
         modifier = modifier,
     ) {
         title()
-        Box(
-            modifier = modifier
-                .padding(top = coverOffset.y.toDp(density))
-                .offset {
-                    IntOffset(x = coverOffset.x.toInt(), y = 0)
-                }
-                .size(coverSize)
-                .clip(RoundedCornerShape(coverCornersRadius)),
-            content = sharedElement,
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .offset {
-                    IntOffset(0,
-                        coverOffset.y.toInt()
-                                + coverSize.toPx(density)
-                                + 16.dp.toPx(density)
-                    )
-                },
-            content = labels,
-        )
+        Column {
+            Box(
+                modifier = modifier
+                    .padding(top = coverOffset.y.toDp(density))
+                    .offset {
+                        IntOffset(x = coverOffset.x.toInt(), y = 0)
+                    }
+                    .size(coverSize)
+                    .clip(RoundedCornerShape(coverCornersRadius)),
+                content = sharedElement,
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                content = labels,
+            )
+        }
     }
 }

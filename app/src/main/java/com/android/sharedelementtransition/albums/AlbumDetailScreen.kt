@@ -46,7 +46,7 @@ fun AlbumDetailScreen(
             ),
             targetOffset = Offset(
                 x = (maxContentWidth - sharedElementTargetSize.toPx(LocalDensity.current)) / 2f,
-                y = 50.dp.toPx(LocalDensity.current).toFloat()
+                y = 0f
             ),
             initialSize = sharedElementData.size,
             targetSize = sharedElementTargetSize,

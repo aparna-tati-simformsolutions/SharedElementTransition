@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.lerp
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -65,34 +66,32 @@ fun SharedElementContainer(
         cornersProgress.value,
     )
 
-    BoxWithConstraints(modifier) {
-        val sharedElementSize = params.targetSize
+    val sharedElementSize = params.targetSize
 
-        val currentSize = lerp(
-            params.initialSize,
-            sharedElementSize,
-            offsetProgress.value
-        )
+    val currentSize = lerp(
+        params.initialSize,
+        sharedElementSize,
+        offsetProgress.value
+    )
 
-        val targetOffset = Offset(
-            x = constraints.maxWidth / 2 - currentSize.toPx(density) / 2f,
-            y = 128.dp.toPx(density).toFloat())
+    val targetOffset = Offset(
+        x = (LocalConfiguration.current.screenWidthDp / 2).toFloat(),
+        y = 128.dp.toPx(density).toFloat())
 
-        val currentOffset = lerp(
-            initialOffset,
-            targetOffset,
-            offsetProgress.value
-        )
+    val currentOffset = lerp(
+        initialOffset,
+        targetOffset,
+        offsetProgress.value
+    )
 
-        SharedElementContainer(
-            coverOffset = currentOffset,
-            coverSize = currentSize,
-            coverCornersRadius = cornersSize,
-            title = title,
-            labels = labels,
-            sharedElement = sharedElement,
-        )
-    }
+    SharedElementContainer(
+        coverOffset = currentOffset,
+        coverSize = currentSize,
+        coverCornersRadius = cornersSize,
+        title = title,
+        labels = labels,
+        sharedElement = sharedElement,
+    )
 }
 
 @Composable

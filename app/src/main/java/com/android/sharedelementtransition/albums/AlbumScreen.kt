@@ -1,11 +1,13 @@
 package com.android.sharedelementtransition.albums
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.dp
 import com.android.sharedelementtransition.models.AlbumInfoModel
 import com.android.sharedelementtransition.models.PlayBackData
 import com.android.sharedelementtransition.states.PlayerScreenState
@@ -39,17 +41,11 @@ fun AlbumScreenCustom(
     screenState: PlayerScreenState,
     content: @Composable () -> Unit
 ) {
-    Layout(content, modifier) { measurables, constraints ->
-        layout(constraints.maxWidth, constraints.maxHeight) {
-            val albumListContainerConstraints = constraints.copy(
-                minHeight = screenState.albumContainerHeight,
-                maxHeight = screenState.albumContainerHeight
-            )
-
-            val albumListContainer = measurables[0]
-
-            albumListContainer.measure(albumListContainerConstraints)
-                .place(0, 0)
-        }
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .height(screenState.albumContainerHeight.dp)
+    ) {
+        content()
     }
 }

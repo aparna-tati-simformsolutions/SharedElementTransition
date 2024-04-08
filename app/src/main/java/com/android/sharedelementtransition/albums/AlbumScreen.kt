@@ -20,9 +20,8 @@ fun AlbumScreen(
     onBackClick: () -> Unit,
     onInfoClick: (albumInfo: AlbumInfoModel, offsetX: Float, offsetY: Float, size: Int) -> Unit
 ) {
-    AlbumScreenCustom(
-        modifier = Modifier.background(Color.Transparent),
-        screenState = screenState
+    Box(
+        modifier = Modifier.background(Color.Transparent).fillMaxSize().height(screenState.albumContainerHeight.dp)
     ) {
         AlbumListContainer(
             modifier = Modifier.fillMaxSize(),
@@ -32,20 +31,5 @@ fun AlbumScreen(
             onBackClick = onBackClick,
             onInfoClick = onInfoClick
         )
-    }
-}
-
-@Composable
-fun AlbumScreenCustom(
-    modifier: Modifier,
-    screenState: PlayerScreenState,
-    content: @Composable () -> Unit
-) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .height(screenState.albumContainerHeight.dp)
-    ) {
-        content()
     }
 }

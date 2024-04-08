@@ -11,7 +11,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.min
-import com.android.sharedelementtransition.LocalInspectionMode
 import com.android.sharedelementtransition.toDp
 
 enum class Screen {
@@ -26,20 +25,17 @@ enum class AlbumPreviewDetailScreen {
 @Composable
 fun rememberPlayerScreenState(
     constraints: Constraints,
-    density: Density = LocalDensity.current,
-    isInPreviewMode: Boolean = LocalInspectionMode.current,
+    density: Density = LocalDensity.current
 ) = remember(constraints) {
     PlayerScreenState(
         constraints,
-        density,
-        isInPreviewMode
+        density
     )
 }
 
 class PlayerScreenState(
     constraints: Constraints,
-    private val density: Density,
-    isInPreviewMode: Boolean = false,
+    private val density: Density
 ) {
     @Stable
     private fun Float.toDp() = this.toDp(density)
@@ -57,14 +53,6 @@ class PlayerScreenState(
         min((maxContentWidth * 0.35f).toDp(), (maxContentHeight * 0.16f).toDp())
 
     val backHandlerEnabled by derivedStateOf { currentScreen != Screen.MAINPLAYERSCREEN }
-
-    val fromPlayerControlsToAlbumsListProgress by derivedStateOf {
-        if (isInPreviewMode) {
-            0f
-        } else {
-            currentDragOffset / maxContentWidth
-        }
-    }
 }
 
 const val AlbumContainerRatio = 1f

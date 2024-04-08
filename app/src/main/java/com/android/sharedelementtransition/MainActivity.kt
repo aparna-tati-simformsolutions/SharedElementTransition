@@ -7,8 +7,6 @@ import androidx.compose.runtime.compositionLocalOf
 import com.android.sharedelementtransition.models.PlayBackData
 import com.android.sharedelementtransition.ui.theme.SharedElementTransitionTheme
 
-val LocalInspectionMode = compositionLocalOf { false }
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

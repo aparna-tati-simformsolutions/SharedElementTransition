@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,16 +44,14 @@ class PlayerScreenState(
     var maxContentWidth = constraints.maxWidth
     var maxContentHeight = constraints.maxHeight
 
-    var currentDragOffset by mutableStateOf(0f)
+    var currentDragOffset by mutableFloatStateOf(0f)
 
     var currentScreen by mutableStateOf(Screen.MAINPLAYERSCREEN)
 
-    val albumContainerHeight = (maxContentHeight * AlbumContainerRatio).toInt()
+    val albumContainerHeight = maxContentHeight
 
     val albumImageWidth =
         min((maxContentWidth * 0.35f).toDp(), (maxContentHeight * 0.16f).toDp())
 
     val backHandlerEnabled by derivedStateOf { currentScreen != Screen.MAINPLAYERSCREEN }
 }
-
-const val AlbumContainerRatio = 1f

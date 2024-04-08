@@ -63,7 +63,7 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
             }
         }
 
-        fun animateTitleProgress(targetValue: Float) {
+        fun animateSharedTitleProgress(targetValue: Float) {
             animScope.launch {
                 titleProgressForward.animateTo(
                     targetValue = targetValue,
@@ -75,7 +75,7 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
         val goBackFromNowPlayingScreen: () -> Unit = remember {
             {
                 sharedElementTransitioned = false
-                animateTitleProgress(0f)
+                animateSharedTitleProgress(0f)
             }
         }
 
@@ -99,7 +99,7 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
                     )
                     sharedElementTransitioned = true
                     albumPreviewDetailTransition = AlbumPreviewDetailScreen.ALBUMPREVIEWDETAIL
-                    animateTitleProgress(1f)
+                    animateSharedTitleProgress(1f)
                 }
             )
         }

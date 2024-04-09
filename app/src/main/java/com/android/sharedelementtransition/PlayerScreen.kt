@@ -2,7 +2,6 @@ package com.android.sharedelementtransition
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import com.android.sharedelementtransition.models.SharedElementData
 import com.android.sharedelementtransition.states.Screen
 import com.android.sharedelementtransition.states.rememberPlayerScreenState
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 @Composable
 fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
@@ -39,29 +37,6 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
 
         val titleProgressForward = remember { Animatable(0f) }
         val sharedProgress = titleProgressForward.value
-
-        fun animateOffset(initialValue: Float, targetValue: Float, onEnd: () -> Unit) {
-            val distance = abs(targetValue - initialValue)
-            val distancePercent = distance / screenState.maxContentWidth
-            val duration = (250 * distancePercent).toInt()
-
-            animScope.launch {
-                animate(
-                    initialValue = initialValue,
-                    targetValue = targetValue,
-                    animationSpec = tween(duration),
-                ) { value, _ -> screenState.currentDragOffset = value }
-                onEnd()
-            }
-        }
-
-        fun collapse() {
-            animateOffset(
-                initialValue = screenState.currentDragOffset, targetValue = 0f
-            ) {
-                screenState.currentScreen = Screen.MAINPLAYERSCREEN
-            }
-        }
 
         fun animateSharedTitleProgress(targetValue: Float) {
             animScope.launch {
@@ -91,7 +66,6 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
                 sharedProgress = sharedProgress,
                 onBackClick = {
                     screenState.currentScreen = Screen.MAINPLAYERSCREEN
-                    collapse()
                 },
                 onInfoClick = { data, x, y, size ->
                     sharedElementParams = SharedElementData(
@@ -123,7 +97,6 @@ fun PlayerScreen(playBackData: PlayBackData = PlayBackData()) {
                 sharedElementTransitioned -> goBackFromNowPlayingScreen()
                 screenState.currentScreen != Screen.MAINPLAYERSCREEN -> {
                     screenState.currentScreen = Screen.MAINPLAYERSCREEN
-                    collapse()
                 }
             }
         }

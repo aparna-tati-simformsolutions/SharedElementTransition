@@ -3,7 +3,6 @@ package com.android.sharedelementtransition.albums
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +21,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
@@ -147,9 +145,6 @@ fun AlbumDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SharedElementContainer(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(surfaceColor.value),
                 params = headerParams.sharedElementParams,
                 isForward = isAppearing,
                 title = {

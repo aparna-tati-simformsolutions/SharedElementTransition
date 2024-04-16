@@ -30,13 +30,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SharedElementContainer(
-    modifier: Modifier = Modifier,
     params: SharedElementParams,
     isForward: Boolean,
     onTransitionFinished: () -> Unit = {},
-    title: @Composable BoxScope.() -> Unit,
-    labels: @Composable BoxScope.() -> Unit,
-    sharedElement: @Composable BoxScope.() -> Unit
+    title: @Composable (BoxScope.() -> Unit),
+    labels: @Composable (BoxScope.() -> Unit),
+    sharedElement: @Composable (BoxScope.() -> Unit)
 ) {
     val density = LocalDensity.current
     val offsetProgress = remember { Animatable(if (isForward) 0f else 1f) }

@@ -154,29 +154,24 @@ fun AlbumDetailScreen(
 
     val contentAlphaState = titleProgress.asState()
 
-    val initialOffset = headerParams.sharedElementParams.initialOffset.copy(y = headerParams.sharedElementParams.initialOffset.y)
-
     val cornersSize = lerp(
         headerParams.sharedElementParams.initialCornerRadius,
         headerParams.sharedElementParams.targetCornerRadius,
         cornersProgress.value,
     )
 
-    val sharedElementSize = headerParams.sharedElementParams.targetSize
-
     val currentSize = lerp(
         headerParams.sharedElementParams.initialSize,
-        sharedElementSize,
+        headerParams.sharedElementParams.targetSize,
         offsetProgress.value
     )
 
-    val targetOffset = Offset(
-        x = (LocalConfiguration.current.screenWidthDp / 2).toFloat(),
-        y = 128.dp.toPx(density).toFloat())
-
     val currentOffset = androidx.compose.ui.geometry.lerp(
-        initialOffset,
-        targetOffset,
+        headerParams.sharedElementParams.initialOffset.copy(y = headerParams.sharedElementParams.initialOffset.y),
+        Offset(
+            x = (LocalConfiguration.current.screenWidthDp / 2).toFloat(),
+            y = 128.dp.toPx(density).toFloat()
+        ),
         offsetProgress.value
     )
 

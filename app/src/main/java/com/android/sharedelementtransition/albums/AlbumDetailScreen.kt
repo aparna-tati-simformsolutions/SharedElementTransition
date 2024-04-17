@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -81,9 +82,13 @@ fun AlbumDetailScreen(
     onTransitionFinished: () -> Unit,
     onBackClick: () -> Unit
 ) {
+    val density = LocalDensity.current
+
     val sharedElementProgress = remember { Animatable(if (isAppearing) 0f else 1f) }
     val titleProgress = remember { Animatable(if (isAppearing) 0f else 1f) }
     val bgColorProgress = remember { Animatable(if (isAppearing) 0f else 1f) }
+    val offsetProgress = remember { Animatable(if (isAppearing) 0f else 1f) }
+    val cornersProgress = remember { Animatable(if (isAppearing) 0f else 1f) }
 
     val headerParams = remember {
         HeaderParams(
@@ -120,6 +125,19 @@ fun AlbumDetailScreen(
                 )
             )
         }
+        launch {
+            offsetProgress.animateTo(
+                targetValue = if (isAppearing) 1f else 0f,
+                animationSpec = tween(ANIM_DURATION),
+            )
+            onTransitionFinished()
+        }
+        launch {
+            cornersProgress.animateTo(
+                targetValue = if (isAppearing) 1f else 0f,
+                animationSpec = tween(2 * ANIM_DURATION / 3),
+            )
+        }
     }
 
     val surfaceMaterialColor = MaterialTheme.colors.surface
@@ -136,6 +154,32 @@ fun AlbumDetailScreen(
 
     val contentAlphaState = titleProgress.asState()
 
+    val initialOffset = headerParams.sharedElementParams.initialOffset.copy(y = headerParams.sharedElementParams.initialOffset.y)
+
+    val cornersSize = lerp(
+        headerParams.sharedElementParams.initialCornerRadius,
+        headerParams.sharedElementParams.targetCornerRadius,
+        cornersProgress.value,
+    )
+
+    val sharedElementSize = headerParams.sharedElementParams.targetSize
+
+    val currentSize = lerp(
+        headerParams.sharedElementParams.initialSize,
+        sharedElementSize,
+        offsetProgress.value
+    )
+
+    val targetOffset = Offset(
+        x = (LocalConfiguration.current.screenWidthDp / 2).toFloat(),
+        y = 128.dp.toPx(density).toFloat())
+
+    val currentOffset = androidx.compose.ui.geometry.lerp(
+        initialOffset,
+        targetOffset,
+        offsetProgress.value
+    )
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = surfaceColor.value,
@@ -145,8 +189,9 @@ fun AlbumDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SharedElementContainer(
-                params = headerParams.sharedElementParams,
-                isForward = isAppearing,
+                coverOffset = currentOffset,
+                coverSize = currentSize,
+                coverCornersRadius = cornersSize,
                 title = {
                     HeaderTitle(
                         alphaProvider = contentAlphaState,

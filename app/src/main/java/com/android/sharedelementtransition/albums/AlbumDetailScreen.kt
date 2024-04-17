@@ -166,7 +166,7 @@ fun AlbumDetailScreen(
         offsetProgress.value
     )
 
-    val currentOffset = androidx.compose.ui.geometry.lerp(
+    val currentOffset = lerp(
         headerParams.sharedElementParams.initialOffset.copy(y = headerParams.sharedElementParams.initialOffset.y),
         Offset(
             x = (LocalConfiguration.current.screenWidthDp / 2).toFloat(),

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -33,6 +34,10 @@ fun lerp(start: Color, stop: Color, fraction: Float): Color =
 @Stable
 fun lerp(start: Dp, stop: Dp, fraction: Float): Dp =
     androidx.compose.ui.unit.lerp(start, stop, fraction)
+
+@Stable
+fun lerp(start: Offset, stop: Offset, fraction: Float): Offset =
+    androidx.compose.ui.geometry.lerp(start, stop, fraction)
 
 
 @Stable

@@ -8,6 +8,4 @@ data class SharedElementParams(
     val targetOffset: Offset,
     val initialSize: Dp,
     val targetSize: Dp,
-    val initialCornerRadius: Dp,
-    val targetCornerRadius: Dp,
 )
